@@ -4,23 +4,20 @@
  */
 package com.Ciclo3.Reto3.controllers;
 
-import com.Ciclo3.Reto3.models.ClientModel;
-import com.Ciclo3.Reto3.services.ClientService;
+import com.Ciclo3.Reto3.models.ReservationModel;
+import com.Ciclo3.Reto3.services.ReservationService;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -28,40 +25,28 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Jaime López Patiño
  */
 @RestController
-@RequestMapping("/api/Client")
+@RequestMapping("/api/Reservation")
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
-public class ClientController {
+public class ReservationController {
 
     @Autowired
-    private ClientService clientService;
+    private ReservationService reservationService;
 
     @GetMapping("/all")
-    public List<ClientModel> getAll() {
-        return clientService.getAll();
+    public List<ReservationModel> getAll() {
+        return reservationService.getAll();
     }
 
     @GetMapping("/{id}")
-    public Optional<ClientModel> getClient(@PathVariable("id") int id) {
-        return clientService.getClient(id);
+    public Optional<ReservationModel> getReservation(@PathVariable("id") int id) {
+        return reservationService.getReservation(id);
     }
 
     @PostMapping("/save")
-    public ResponseEntity<ClientModel> save(@RequestBody ClientModel clientModel) {
-        ClientModel clientModelResponse = clientService.save(clientModel);
-        ResponseEntity<ClientModel> entity = new ResponseEntity(clientModelResponse, HttpStatus.CREATED);
+    public ResponseEntity<ReservationModel> save(@RequestBody ReservationModel reservationModel) {
+        ReservationModel reservationModelResponse = reservationService.save(reservationModel);
+        ResponseEntity<ReservationModel> entity = new ResponseEntity(reservationModelResponse, HttpStatus.CREATED);
         return entity;
-    }
-
-    @PutMapping("/update")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ClientModel update(@RequestBody ClientModel clientModel) {
-        return clientService.update(clientModel);
-    }
-
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Boolean deleteClient(@PathVariable("id") int id) {
-        return clientService.deleteClient(id);
     }
 
 }

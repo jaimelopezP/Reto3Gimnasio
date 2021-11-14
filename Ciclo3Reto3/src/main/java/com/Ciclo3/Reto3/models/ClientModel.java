@@ -4,11 +4,15 @@
  */
 package com.Ciclo3.Reto3.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -16,36 +20,51 @@ import javax.persistence.Table;
  * @author Jaime López Patiño
  */
 @Entity
-@Table(name = "Client")
+@Table(name = "client")
 
 public class ClientModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    private Integer id;
-    private String name;
+    private Integer idClient;
     private String email;
     private String password;
-    private int age;
+    private String name;
+    private Integer age;
+
+    @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy = "client")
+    @JsonIgnoreProperties("client")
+    public List<MessageModel> messages;
+
+    public List<MessageModel> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<MessageModel> messages) {
+        this.messages = messages;
+    }
+
+    @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy = "client")
+    @JsonIgnoreProperties("client")
+    public List<ReservationModel> reservations;
+
+    public List<ReservationModel> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<ReservationModel> reservations) {
+        this.reservations = reservations;
+    }
 
     public ClientModel() {
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getidClient() {
+        return idClient;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setidClient(Integer idClient) {
+        this.idClient = idClient;
     }
 
     public String getEmail() {
@@ -64,11 +83,19 @@ public class ClientModel implements Serializable {
         this.password = password;
     }
 
-    public int getAge() {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 

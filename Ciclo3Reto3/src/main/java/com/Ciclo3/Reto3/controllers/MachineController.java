@@ -4,8 +4,8 @@
  */
 package com.Ciclo3.Reto3.controllers;
 
-import com.Ciclo3.Reto3.models.ClientModel;
-import com.Ciclo3.Reto3.services.ClientService;
+import com.Ciclo3.Reto3.models.MachineModel;
+import com.Ciclo3.Reto3.services.MachineService;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,40 +28,41 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Jaime López Patiño
  */
 @RestController
-@RequestMapping("/api/Client")
+@RequestMapping("/api/Machine")
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
-public class ClientController {
+public class MachineController {
 
     @Autowired
-    private ClientService clientService;
+    private MachineService machineService;
 
     @GetMapping("/all")
-    public List<ClientModel> getAll() {
-        return clientService.getAll();
+    public List<MachineModel> getAll() {
+        return machineService.getAll();
     }
 
     @GetMapping("/{id}")
-    public Optional<ClientModel> getClient(@PathVariable("id") int id) {
-        return clientService.getClient(id);
+    public Optional<MachineModel> getMachine(@PathVariable("id") int id) {
+        return machineService.getMachine(id);
     }
 
     @PostMapping("/save")
-    public ResponseEntity<ClientModel> save(@RequestBody ClientModel clientModel) {
-        ClientModel clientModelResponse = clientService.save(clientModel);
-        ResponseEntity<ClientModel> entity = new ResponseEntity(clientModelResponse, HttpStatus.CREATED);
+    public ResponseEntity<MachineModel> save(@RequestBody MachineModel machineModel) {
+        MachineModel machineModelResponse = machineService.save(machineModel);
+        ResponseEntity<MachineModel> entity = new ResponseEntity(machineModelResponse, HttpStatus.CREATED);
         return entity;
     }
 
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
-    public ClientModel update(@RequestBody ClientModel clientModel) {
-        return clientService.update(clientModel);
+    public MachineModel update(@RequestBody MachineModel machineModel) {
+        return machineService.update(machineModel);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Boolean deleteClient(@PathVariable("id") int id) {
-        return clientService.deleteClient(id);
+    public Boolean deleteMachine(@PathVariable("id") int id) {
+        return machineService.deleteMachine(id);
+
     }
 
 }
