@@ -38,4 +38,28 @@ public class MessageService {
         return (messageModel);
     }
 
+    public MessageModel update(MessageModel messageModel) {
+        if (messageModel.getIdMessage() != null) {
+            Optional<MessageModel> u = messageRepository.getMessage(messageModel.getIdMessage());
+            if (!u.isEmpty()) {
+
+                if (messageModel.getMessageText() != null) {
+                    u.get().setMessageText(messageModel.getMessageText());
+                }
+
+                return messageRepository.save(u.get());
+            }
+        }
+        return messageModel;
+    }
+
+    public boolean deleteMessage(int id) {
+        Optional<MessageModel> d = getMessage(id);
+        if (!d.isEmpty()) {
+            messageRepository.delete(d.get());
+            return true;
+        }
+        return false;
+
+    }
 }

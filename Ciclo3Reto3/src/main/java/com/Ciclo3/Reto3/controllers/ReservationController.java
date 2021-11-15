@@ -4,7 +4,9 @@
  */
 package com.Ciclo3.Reto3.controllers;
 
+import com.Ciclo3.Reto3.models.CountClient;
 import com.Ciclo3.Reto3.models.ReservationModel;
+import com.Ciclo3.Reto3.models.StatusAmount;
 import com.Ciclo3.Reto3.services.ReservationService;
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +49,22 @@ public class ReservationController {
         ReservationModel reservationModelResponse = reservationService.save(reservationModel);
         ResponseEntity<ReservationModel> entity = new ResponseEntity(reservationModelResponse, HttpStatus.CREATED);
         return entity;
+    }
+
+    @GetMapping("/report-status")
+    public StatusAmount getReservationStatusStatus() {
+        return reservationService.getStatusReport();
+    }
+
+    @GetMapping("/report-clients")
+    public List<CountClient> getCountClient() {
+        return reservationService.getTopClients();
+    }
+
+    @GetMapping("/report-dates/{dateOne}/{dateTwo}")
+    public List<ReservationModel> getDatesReport(@PathVariable("dateOne") String d1, @PathVariable("dateTwo") String d2) {
+        return reservationService.getReservationPeriod(d1, d2);
+
     }
 
 }
